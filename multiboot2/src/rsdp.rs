@@ -9,6 +9,7 @@
 //! Even though the bootloader should give the address of the real RSDP/XSDT, the checksum and
 //! signature should be manually verified.
 use crate::TagTypeId;
+use core::ptr::addr_of;
 use core::slice;
 use core::str;
 use core::str::Utf8Error;
@@ -59,6 +60,10 @@ impl RsdpV1Tag {
     /// The physical (I repeat: physical) address of the RSDT table.
     pub fn rsdt_address(&self) -> usize {
         self.rsdt_address as usize
+    }
+
+    pub fn rsdp_address(&self) -> usize {
+        addr_of!(self.signature) as usize
     }
 }
 
